@@ -76,6 +76,7 @@
           "info": true,
           "autoWidth": false
 		});
+		
       });
     </script>
 	
@@ -126,5 +127,19 @@
 			
 		});
 	</script>
+	
+	<script type="text/javascript" src="../assets/plugins/treegrid/js/jquery.treegrid.js"></script>
+	<script type="text/javascript" src="../assets/plugins/treegrid/js/jquery.treegrid.bootstrap3.js"></script>
+	<script type="text/javascript">
+    $(document).ready(function() {
+        $('.tree').treegrid({
+                    expanderExpandedClass: 'glyphicon glyphicon-minus',
+                    expanderCollapsedClass: 'glyphicon glyphicon-plus',
+					initialState : 'collapsed',
+					treeColumn: 1,
+                });
+    });
+	</script>
+	
   </body>
 </html>

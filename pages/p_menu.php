@@ -53,6 +53,7 @@
                 <li><a href="customer.php"><i class="fa fa-circle-o"></i> Pelanggan Baru dan Lama</a></li>
                 <li><a href="bestcustomer.php"><i class="fa fa-circle-o"></i> Pelanggan Terbaik</a></li>
                 <li><a href="salesarea.php"><i class="fa fa-circle-o"></i> Wilayah Sebaran Penjualan</a></li>
+				<li><a href="sales.php"><i class="fa fa-circle-o"></i> Jumlah Penjualan</a></li>
               </ul>
             </li>
 			

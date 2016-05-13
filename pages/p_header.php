@@ -32,7 +32,9 @@
     <link href="../assets/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="../assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
+	<!-- Tree Grid -->
+	<link rel="stylesheet" href="../assets/plugins/treegrid/css/jquery.treegrid.css">
+	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
