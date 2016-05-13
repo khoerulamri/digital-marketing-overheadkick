@@ -140,6 +140,11 @@
                 });
     });
 	</script>
+	<script type="text/javascript">
+     $('#backToTopBtn').click(function(){
+        $('html,body').animate({scrollTop:0},'slow');return false;
+    });
+	</script>
 	
   </body>
 </html>

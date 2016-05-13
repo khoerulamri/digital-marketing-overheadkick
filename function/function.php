@@ -14,8 +14,8 @@ switch ($id) {
 		$email = $_POST['email'];
 		$password = $_POST['password'];
 		//$pass = md5($bpass);
-		$coo = "uiQfmqYYkzhQUeYQDsv6LBIBhjEMRfU6wP55qjYEGTA1SJZ3K4RJJU1b";//lokal
-		//$coo = "Ds9suRCBX4c3d7JOKodnJQQih92hCzHwvvP0HSTQbjnp8hJmU0SRsTZv";//inet
+		//$coo = "uiQfmqYYkzhQUeYQDsv6LBIBhjEMRfU6wP55qjYEGTA1SJZ3K4RJJU1b";//lokal
+		$coo = "Ds9suRCBX4c3d7JOKodnJQQih92hCzHwvvP0HSTQbjnp8hJmU0SRsTZv";//inet
 		$encpass = md5($coo."".$password);
 		$sql = mysql_query("SELECT * FROM ps_employee WHERE email='$email' && passwd='$encpass'");
 		

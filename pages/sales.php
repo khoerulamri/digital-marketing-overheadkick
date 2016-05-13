@@ -1,8 +1,9 @@
 <?php
-	session_start();
-	if(!isset($_SESSION['is_login'])){
-		header("Location: ../index.php");
-	}
+set_time_limit(0);
+session_start();
+if(!isset($_SESSION['is_login'])){
+	header("Location: ../index.php");
+}
 include "../function/koneksi.php";
 include "p_header.php";
 include "p_menu.php";
@@ -33,7 +34,7 @@ else
 			<li class="active"><a href="sales.php">Penjualan</li></a>
           </ol>
         </section>
-
+		<a href="#top" id ="backToTopBtn" class="well well-sm"></a>
         <!-- Main content -->
         <section class="content">
 			<div class="row">
@@ -101,15 +102,18 @@ else
 							<th rowspan="2" width="5%" class="text-center">No</th>
 							<th rowspan="2" class="text-center">Nama Kategori</th>
 							<th rowspan="2" class="text-center">Kelompok Kategori</th>
-							<th colspan="<?php echo $seconds_diff->format("%d")+1;?>" class="text-center">Tgl</th>
+							<th colspan="<?php echo $seconds_diff->format("%d")+1;?>" class="text-center">Tgl<th rowspan="2" width="7%" class="text-center">Total</th>
+							</th>
 						</tr>
 						<tr>
 				<?php 
-				
+				$totalvertikal = array();
+							
 				//loop range tanggal
 				while (strtotime($date) <= strtotime($end_date)) {
-					echo "<th class='text-center'>".date("d",strtotime($date))."</th>";
+					echo "<th class='text-center'>".date("d-M",strtotime($date))."</th>";
 					$date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));
+					array_push($totalvertikal,0);
 					}
 					
 				?>
@@ -126,7 +130,9 @@ else
 				$q2 = mysql_query($sql);
 						$i=1;
 						$nomor=1;
+						
 						while($d2 = mysql_fetch_array($q2)){
+							$total=0;
 							echo '<tr class="treegrid-'.$i.'">
 										<td  class="text-center">'.$nomor.'</td>
 										<td>'.$d2['category_name'].'</td>
@@ -135,6 +141,7 @@ else
 
 							$date=$periode1;
 							$end_date=$periode2;
+							$k=0;
 							//hitung jumlahnya setua tanggal
 							while (strtotime($date) <= strtotime($end_date)) {
 								$tgldari=date("Y-m-d",strtotime($date)).' 00:00:00';
@@ -165,15 +172,18 @@ else
 									) tabel WHERE tabel.id_category='".$d2['id_category']."' ;
 									";
 								$qsqltgl2 = mysql_query($sqltgl);
+								
 								while($dsqltgl = mysql_fetch_array($qsqltgl2)){
 										echo '<td width="3%"  class="text-center">'.$dsqltgl['qty'].'</td>';
+										$total=$total+$dsqltgl['qty'];
+										$kuantity=$dsqltgl['qty'];
 								}
 								$date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));
-															
-								
+								$totalvertikal[$k]=$totalvertikal[$k]+$kuantity;
+								$k++;
 								}
 								
-							echo '
+							echo '<td class="text-center"><strong>'.$total.'</strong></td>
 								  </tr>';
 							
 							//detail sub produknya
@@ -184,8 +194,10 @@ else
 								
 							$j=$i;
 							$i++;
+							
 							$qsqldetail = mysql_query($sqldetail);
 							while($dsqldetail = mysql_fetch_array($qsqldetail)){
+								$subtotal=0;
 								echo '<tr class="treegrid-'.$i.' treegrid-parent-'.$j.' success">
 									<td  class="text-center"></td>
 									<td>'.$dsqldetail['product_name'].'</td>
@@ -232,19 +244,37 @@ else
 									else{
 										while($dsqltgl = mysql_fetch_array($qsqltgl2)){
 											echo '<td width="3%"  class="text-center">'.$dsqltgl['qty'].'</td>';
+											$subtotal=$subtotal+$dsqltgl['qty'];
 										}
 									}
 									
 									$date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));	
 									
 								}
-								echo '</tr>';
+								echo '<td class="text-center">'.$subtotal.'</td>
+									</tr>';
 								$i++;
 							}
 							$nomor++;
 						}
 				?>
-						
+						<tr class="warning">
+							<td colspan="3" width="5%" class="text-center"><strong>TOTAL</strong></td>
+							<?php 		
+							//loop range tanggal
+							$date=$periode1;
+							$end_date=$periode2;
+							$k=0;
+							$totalall=0;
+							while (strtotime($date) <= strtotime($end_date)) {
+								echo "<td class='text-center'><strong>".$totalvertikal[$k]."</strong></td>";
+								$date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));
+								$totalall=$totalall+$totalvertikal[$k];
+								$k++;
+								}
+							?>
+							<td colspan="3" width="5%" class="text-center"><strong><?php echo $totalall;?></strong></td>
+						</tr>	
 					</table>	  
 				</div><!-- /.box-body -->
 				</div><!-- /.box -->
